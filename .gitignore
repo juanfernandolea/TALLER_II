@@ -1,0 +1,15 @@
+# Configuración sensible
+config.properties
+
+# Compilación
+target/
+build/
+out/
+
+# IDEs
+.idea/
+*.iml
+nbproject/private/
+
+# Logs
+*.log
