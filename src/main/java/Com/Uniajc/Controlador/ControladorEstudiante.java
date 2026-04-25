@@ -9,7 +9,7 @@ import com.uniajc.vista.VistaEstudiante;
 public class ControladorEstudiante {
 
     private VistaEstudiante vista;
-    private EstudianteService servicio;
+    private EstudianteService servicios;
 
     public ControladorEstudiante(VistaEstudiante vista, EstudianteService servicio) {
         this.vista = vista;

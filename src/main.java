@@ -22,8 +22,10 @@ public class Main {
         ControladorEstudiante controlador = new ControladorEstudiante(vista, estudianteService);
 
         controlador.mostrarTodosLosEstudiantes(); // Llamar al método para mostrar todos los estudiantes antes de registrar uno nuevo
+
         controlador.registrarEstudiante(); // Llamar al método para registrar un estudiante
+
         controlador.mostrarTodosLosEstudiantes(); // Llamar al método para mostrar todos los estudiantes después de registrar uno nuevo
-      
+       
     }
 }
