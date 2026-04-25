@@ -1,52 +1,59 @@
 package com.uniajc;
 
-import com.uniajc.controlador.ControladorEstudiante;
-import com.uniajc.servicios.EstudianteService;
-import com.uniajc.vista.VistaEstudiante;
-import com.uniajc.controlador.ControladorMateria;
-import com.uniajc.controlador.ControladorDocente; // Nuevo import
-import java.util.Scanner; // Import necesario para leer el teclado
+import com.uniajc.controlador.*;
+import com.uniajc.servicios.*;
+import com.uniajc.vista.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner teclado = new Scanner(System.in);
-        System.out.println("Practica MVC - Sistema academico Uniajc!");
-        
-        // --- ENTIDAD: ESTUDIANTE ---
-        VistaEstudiante vista = new VistaEstudiante();
-        EstudianteService estudianteService = new EstudianteService();
-        ControladorEstudiante controlador = new ControladorEstudiante(vista, estudianteService);
-        
-        System.out.println("\n>>> GESTIÓN DE ESTUDIANTES");
-        controlador.mostrarTodosLosEstudiantes();
-        controlador.registrarEstudiante();
-        controlador.mostrarTodosLosEstudiantes();
+public static void main(String[] args) {
+System.out.println("Practica MVC - Sistema academico Uniajc!");
 
-        // --- ENTIDAD: MATERIA ---
-        System.out.println("\n>>> GESTIÓN DE MATERIAS");
-        ControladorMateria controladorMateria = new ControladorMateria();
-        
-        System.out.print("Ingrese el nombre de la materia: ");
-        String nombreMat = teclado.nextLine();
-        System.out.print("Ingrese los créditos de la materia: ");
-        int creditosMat = teclado.nextInt();
-        teclado.nextLine(); // Limpiar el buffer del Enter
+// --- ENTIDAD: ESTUDIANTE ---
+VistaEstudiante vistaEst = new VistaEstudiante();
+EstudianteService serviceEst = new EstudianteService();
+ControladorEstudiante ctrlEst = new ControladorEstudiante(vistaEst, serviceEst);
 
-        controladorMateria.registrarMateria(nombreMat, creditosMat);
-        controladorMateria.mostrarTodasLasMaterias();
+System.out.println("\n>>> GESTIÓN DE ESTUDIANTES");
+ctrlEst.mostrarTodosLosEstudiantes();
+ctrlEst.registrarEstudiante();
+ctrlEst.mostrarTodosLosEstudiantes();
 
-        // --- ENTIDAD: DOCENTE ---
-        System.out.println("\n>>> GESTIÓN DE DOCENTES");
-        ControladorDocente controladorDocente = new ControladorDocente();
+// --- ENTIDAD: MATERIA ---
+VistaMateria vistaMat = new VistaMateria();
+MateriaService serviceMat = new MateriaService();
+ControladorMateria ctrlMat = new ControladorMateria(vistaMat, serviceMat);
 
-        System.out.print("Ingrese el nombre del docente: ");
-        String nombreDoc = teclado.nextLine();
-        System.out.print("Ingrese la especialidad del docente: ");
-        String especialidadDoc = teclado.nextLine();
+System.out.println("\n>>> GESTIÓN DE MATERIAS");
+ctrlMat.registrarMateria(); // La vista se encarga de pedir los datos
+ctrlMat.mostrarTodasLasMaterias();
 
-        controladorDocente.registrarDocente(nombreDoc, especialidadDoc);
-        controladorDocente.listarDocentes();
+// --- ENTIDAD: DOCENTE ---
+VistaDocente vistaDoc = new VistaDocente();
+DocenteService serviceDoc = new DocenteService();
+ControladorDocente ctrlDoc = new ControladorDocente(vistaDoc, serviceDoc);
 
-        System.out.println("\nProceso finalizado. ¡Buen trabajo!");
-    }
+System.out.println("\n>>> GESTIÓN DE DOCENTES");
+ctrlDoc.registrarDocente();
+ctrlDoc.listarDocentes();
+
+// --- ENTIDAD: GRUPO ---
+VistaGrupo vistaGrp = new VistaGrupo();
+GrupoService serviceGrp = new GrupoService();
+ControladorGrupo ctrlGrp = new ControladorGrupo(vistaGrp, serviceGrp);
+
+System.out.println("\n>>> GESTIÓN DE GRUPOS");
+ctrlGrp.registrarGrupo();
+ctrlGrp.mostrarGrupos();
+
+// --- ENTIDAD: INSCRIPCIÓN ---
+VistaInscripcion vistaIns = new VistaInscripcion();
+InscripcionCursoService serviceIns = new InscripcionCursoService();
+ControladorInscripcion ctrlIns = new ControladorInscripcion(vistaIns, serviceIns);
+
+System.out.println("\n>>> GESTIÓN DE INSCRIPCIONES");
+ctrlIns.registrarInscripcion();
+ctrlIns.mostrarInscripciones();
+
+System.out.println("\nProceso finalizado. ¡Buen trabajo!");
+}
 }

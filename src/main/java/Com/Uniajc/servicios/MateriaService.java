@@ -5,14 +5,14 @@ import com.uniajc.modelo.Materia;
 import java.util.List;
 
 public class MateriaService {
-    private MateriaDao materiaDao = new MateriaDao();
+private MateriaDao materiaDao = new MateriaDao();
 
-    public void guardarMateria(String nombre, int creditos) {
-        Materia nuevaMateria = new Materia(nombre, creditos);
-        materiaDao.insertar(nuevaMateria);
-    }
+public void guardarMateria(String nombre, int creditos) {
+Materia nuevaMateria = new Materia(nombre, creditos);
+materiaDao.insertar(nuevaMateria);
+}
 
-    public List<Materia> obtenerTodasLasMaterias() {
-        return materiaDao.obtenerTodas();
-    }
+public List<Materia> obtenerTodasLasMaterias() {
+return materiaDao.obtenerTodas();
+}
 }

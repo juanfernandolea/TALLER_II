@@ -16,56 +16,56 @@ import com.uniajc.config.ConexionPostgresDatabase;
 import com.uniajc.modelo.Estudiante;
 
 public class EstudianteDao {
-   
-    // Aquí se implementarán los métodos para interactuar con la base de datos, como:
-    // - List<Estudiante> obtenerTodos()
-    // - Estudiante obtenerPorId(int id)
-    // - void actualizar(Estudiante estudiante)
-    // - void eliminar(int id)
 
-    public void guardar(Estudiante estudiante) {
-               
-        String sql = "INSERT INTO \"practica-mvc\".estudiantes (name, lastname, email) VALUES (?, ?, ?)";
+// Aquí se implementarán los métodos para interactuar con la base de datos, como:
+// - List<Estudiante> obtenerTodos()
+// - Estudiante obtenerPorId(int id)
+// - void actualizar(Estudiante estudiante)
+// - void eliminar(int id)
 
-        try (Connection conn = ConexionPostgresDatabase.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            // Establecer los parámetros del PreparedStatement con los datos del estudiante
-            pstmt.setString(1, estudiante.getNombre());
-            pstmt.setString(2, estudiante.getApellido());
-            pstmt.setString(3, estudiante.getEmail());
+public void guardar(Estudiante estudiante) {
 
-            // Ejecutar la consulta para insertar el estudiante en la base de datos
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+String sql = "INSERT INTO \"practica-mvc\".estudiantes (name, lastname, email) VALUES (?, ?, ?)";
 
-    }
+try (Connection conn = ConexionPostgresDatabase.getConnection();
+PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-    public List<Estudiante> obtenerTodos() {
-        List<Estudiante> estudiantes = new ArrayList<>();
+// Establecer los parámetros del PreparedStatement con los datos del estudiante
+pstmt.setString(1, estudiante.getNombre());
+pstmt.setString(2, estudiante.getApellido());
+pstmt.setString(3, estudiante.getEmail());
 
-        String sql = "SELECT id, name, lastname, email FROM \"practica-mvc\".estudiantes";
+// Ejecutar la consulta para insertar el estudiante en la base de datos
+pstmt.executeUpdate();
+} catch (SQLException e) {
+e.printStackTrace();
+}
 
-        try (Connection conn = ConexionPostgresDatabase.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+}
 
-            while (rs.next()) {
-                Estudiante estudiante = new Estudiante();
-                estudiante.setId(rs.getInt("id"));
-                estudiante.setNombre(rs.getString("name"));
-                estudiante.setApellido(rs.getString("lastname"));
-                estudiante.setEmail(rs.getString("email"));
-                estudiantes.add(estudiante);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+public List<Estudiante> obtenerTodos() {
+List<Estudiante> estudiantes = new ArrayList<>();
 
-        return estudiantes;
-    }
+String sql = "SELECT id, name, lastname, email FROM \"practica-mvc\".estudiantes";
 
-    
+try (Connection conn = ConexionPostgresDatabase.getConnection();
+Statement stmt = conn.createStatement();
+ResultSet rs = stmt.executeQuery(sql)) {
+
+while (rs.next()) {
+Estudiante estudiante = new Estudiante();
+estudiante.setId(rs.getInt("id"));
+estudiante.setNombre(rs.getString("name"));
+estudiante.setApellido(rs.getString("lastname"));
+estudiante.setEmail(rs.getString("email"));
+estudiantes.add(estudiante);
+}
+} catch (SQLException e) {
+e.printStackTrace();
+}
+
+return estudiantes;
+}
+
+
 }

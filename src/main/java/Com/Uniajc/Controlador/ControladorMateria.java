@@ -2,20 +2,29 @@ package com.uniajc.controlador;
 
 import com.uniajc.modelo.Materia;
 import com.uniajc.servicios.MateriaService;
+import com.uniajc.vista.VistaMateria;
 import java.util.List;
 
 public class ControladorMateria {
-    private MateriaService materiaService = new MateriaService();
+private MateriaService service;
+private VistaMateria vista;
 
-    public void registrarMateria(String nombre, int creditos) {
-        materiaService.guardarMateria(nombre, creditos);
-    }
+public ControladorMateria(VistaMateria vista, MateriaService service) {
+this.vista = vista;
+this.service = service;
+}
 
-    public void mostrarTodasLasMaterias() {
-        List<Materia> materias = materiaService.obtenerTodasLasMaterias();
-        System.out.println("\n--- Lista de Materias ---");
-        for (Materia m : materias) {
-            System.out.println("ID: " + m.getIdMateria() + " | Nombre: " + m.getNombreMateria() + " | Créditos: " + m.getCreditos());
-        }
-    }
+public void registrarMateria() {
+String nombre = vista.pedirNombre();
+int creditos = vista.pedirCreditos();
+service.guardarMateria(nombre, creditos);
+}
+
+public void mostrarTodasLasMaterias() {
+List<Materia> materias = service.obtenerTodasLasMaterias();
+System.out.println("\n--- LISTA DE MATERIAS ---");
+for (Materia m : materias) {
+System.out.println("ID: " + m.getIdMateria() + " | " + m.getNombreMateria());
+}
+}
 }

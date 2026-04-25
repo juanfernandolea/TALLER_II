@@ -10,45 +10,45 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class ConexionPostgresDatabase {
-    private static Connection connection = null;
+// Aquí estaba el error (estaba cortado en dos líneas)
+private static Connection connection = null;
 
-    public static Connection getConnection() {
-        // Usamos un objeto Properties para cargar los parámetros de conexión desde un archivo de configuración
-        Properties properties = new Properties();
-        if (connection == null) {
-            try {
-                // Cargar las propiedades desde el archivo config-postgres.properties
-                properties.load(new FileInputStream(new File("config.properties")));
+public static Connection getConnection() {
+Properties properties = new Properties();
+if (connection == null) {
+try {
+// Asegúrate de que el archivo se llame config.properties y esté en la raíz del proyecto
+properties.load(new FileInputStream(new File("config.properties")));
 
-                // Definir los parámetros de conexión
-                String url = properties.getProperty("db.url");
-                String user = properties.getProperty("db.user");
-                String password = properties.getProperty("db.password");
-                
-                // Establecer la conexión
-                connection = DriverManager.getConnection(url, user, password);
-                System.out.println("Conexión a base de datos exitosa.");
-            } catch (SQLException error) {
-                System.out.println("Failed to establish database connection. " + error.getMessage());
-                error.printStackTrace();
-            } catch (FileNotFoundException error) {
-                error.printStackTrace();
-            } catch (IOException error) {
-                error.printStackTrace();
-            }
-        }
-        return connection;
-    }
+String url = properties.getProperty("db.url");
+String user = properties.getProperty("db.user");
+String password = properties.getProperty("db.password");
 
-    public static void closeConnection() {
-        if (connection != null) {
-            try {
-                connection.close();
-                System.out.println("Database connection closed successfully.");
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.out.println("Failed to close database connection. " + e.getMessage());
-            }
-        }
-    }
+connection = DriverManager.getConnection(url, user, password);
+System.out.println("Conexión a base de datos exitosa.");
+} catch (SQLException error) {
+System.out.println("Failed to establish database connection. " + error.getMessage());
+error.printStackTrace();
+} catch (FileNotFoundException error) {
+System.out.println("Error: No se encontró el archivo config.properties");
+error.printStackTrace();
+} catch (IOException error) {
+error.printStackTrace();
+}
+}
+return connection;
+}
+
+public static void closeConnection() {
+if (connection != null) {
+try {
+connection.close();
+connection = null; // IMPORTANTE: Resetear a null para poder reconectar luego
+System.out.println("Database connection closed successfully.");
+} catch (SQLException e) {
+e.printStackTrace();
+System.out.println("Failed to close database connection. " + e.getMessage());
+}
+}
+}
 }
